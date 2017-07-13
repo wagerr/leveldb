@@ -50,11 +50,11 @@ static inline uint64_t LE_LOAD64(const uint8_t *p) {
 
 static inline bool HaveSSE42() {
 #if defined(_MSC_VER)
-  int cpu_info[4];
+  int cpu_info[4] = {};
   __cpuid(cpu_info, 1);
   return (cpu_info[2] & (1 << 20)) != 0;
 #elif defined(__GNUC__)
-  unsigned int eax, ebx, ecx, edx;
+  unsigned int eax, ebx, ecx=0, edx;
   __get_cpuid(1, &eax, &ebx, &ecx, &edx);
   return (ecx & (1 << 20)) != 0;
 #else
